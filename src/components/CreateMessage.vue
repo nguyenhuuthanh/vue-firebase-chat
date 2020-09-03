@@ -25,21 +25,19 @@ export default {
   data() {
     return {
       newMessage: null,
-      errorText: null
+      errorText: null,
+      ref: fb.database().ref('messages/'),
     };
   },
   methods: {
     createMessage() {
       if (this.newMessage) {
-        fb.collection("messages")
-          .add({
-            message: this.newMessage,
-            name: this.name,
-            timestamp: Date.now()
-          })
-          .catch(err => {
-            console.log(err);
-          });
+        let newData = this.ref.push();
+        newData.set({
+          message: this.newMessage,
+          name: this.name,
+          timestamp: Date.now()
+        });
         this.newMessage = null;
         this.errorText = null;
       } else {

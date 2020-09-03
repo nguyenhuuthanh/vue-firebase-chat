@@ -32,14 +32,13 @@ export default {
   },
   data() {
     return {
-      messages: []
+      messages: [],
+      ref: fb.database().ref('messages/'),
     };
   },
   created() {
-    let ref = fb.collection("messages").orderBy("timestamp");
-
-    ref.onSnapshot(snapshot => {
-      snapshot.docChanges().forEach(change => {
+    this.ref.on('value', (snapshot) => {
+      snapshot.forEach(change => {
         if (change.type == "added") {
           let doc = change.doc;
           this.messages.push({
