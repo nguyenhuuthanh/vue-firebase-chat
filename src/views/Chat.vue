@@ -32,24 +32,23 @@ export default {
   },
   data() {
     return {
-      messages: [],
-      ref: fb.database().ref('messages/'),
+      messages: []
     };
   },
   created() {
-    this.ref.on('value', (snapshot) => {
-      snapshot.forEach(change => {
-        if (change.type == "added") {
-          let doc = change.doc;
-          this.messages.push({
-            id: doc.id,
-            name: doc.data().name,
-            message: doc.data().message,
-            timestamp: moment(doc.data().timestamp).format("LTS")
-          });
-        }
+    this.messages = [];
+    fb.database()
+      .ref("messages")
+      .on("value", snapshot => {
+        this.messages = [];
+        snapshot.forEach(doc => {
+          let item = doc.val();
+          if (item) {
+            item.timestamp = moment(item.timestamp).format("LTS");
+            this.messages.push(item);
+          }
+        });
       });
-    });
   }
 };
 </script>

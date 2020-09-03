@@ -17,6 +17,7 @@
     "moment": "^2.27.0",
     "popper.js": "^1.16.1",
     "stream-chat": "^1.8.0",
+    "uniqid": "^5.2.0",
     "vue": "^2.6.11",
     "vue-chat-scroll": "^1.4.0",
     "vue-router": "^3.1.6",

@@ -17,6 +17,7 @@
   </div>
 </template>
 <script>
+import uniquid from "uniqid";
 import fb from "@/firebase/init";
 
 export default {
@@ -25,15 +26,15 @@ export default {
   data() {
     return {
       newMessage: null,
-      errorText: null,
-      ref: fb.database().ref('messages/'),
+      errorText: null
     };
   },
   methods: {
     createMessage() {
       if (this.newMessage) {
-        let newData = this.ref.push();
+        let newData = fb.database().ref("messages").push();
         newData.set({
+          id: uniquid(),
           message: this.newMessage,
           name: this.name,
           timestamp: Date.now()
